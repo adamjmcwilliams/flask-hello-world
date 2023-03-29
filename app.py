@@ -61,3 +61,14 @@ def db_select():
     template_string += "</table>"
     return template_string
 
+@app.route('/db_drop')
+def db_drop():
+    conn = psycopg2.connect("postgres://adams_database_user:NK079LqRtrMghxVhVpKQtK2dFrzzYNiL@dpg-cgiaf9vdvk4vd526vf10-a/adams_database")
+    cur = conn.cursor()
+    cur.execute('''
+    DROP TABLE Basketball;
+    ''')
+    conn.commit()
+    conn.close()
+    return 'Basketball table dropped'
+
