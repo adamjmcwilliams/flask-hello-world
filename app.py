@@ -57,7 +57,10 @@ def db_select():
     conn.close()
     template_string = "<table>"
     for player in rows:
-        template_string += f"<tr> <td>{player[0]}</td> <td>{player[1]}</td> <td>{player[2]}</td> <td>{player[3]}</td> <td>{player[4]}</td> </tr>"
+        template_string += "<tr>"
+        for stats in player:
+            template_string += f"<td>{stats}</td>"
+        template_string += "</tr>"
     template_string += "</table>"
     return template_string
 
