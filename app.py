@@ -53,8 +53,8 @@ def db_select():
     cur.execute('''
     SELECT * FROM Basketball;
     ''')
-    conn.close()
     rows = cur.fetchall()
+    conn.close()
     template_string = "<table>"
     for player in rows:
         template_string += f"<tr> <td>{player[0]}</td> <td>{player[1]}</td> <td>{player[2]}</td> <td>{player[3]}</td> <td>{player[4]}</td> </tr>"
