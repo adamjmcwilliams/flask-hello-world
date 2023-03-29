@@ -29,3 +29,35 @@ def db_create():
     conn.commit()
     conn.close()
     return 'Basketball table created'
+
+@app.route('/db_insert')
+def db_insert():
+    conn = psycopg2.connect("postgres://adams_database_user:NK079LqRtrMghxVhVpKQtK2dFrzzYNiL@dpg-cgiaf9vdvk4vd526vf10-a/adams_database")
+    cur = conn.cursor()
+    cur.execute('''
+    INSERT INTO Basketball (First, Last, City, Name, Number)
+    Values
+    ('Jayson', 'Tatum', 'Boston', 'Celtics', 0),
+    ('Stephen', 'Curry', 'San Francisco', 'Warriors', 30),
+    ('Nikola', 'Jokic', 'Denver', 'Nuggets', 15),
+    ('Kawhi', 'Leonard', 'Los Angeles', 'Clippers', 2);
+    ''')
+    conn.commit()
+    conn.close()
+    return 'Basketball table populated'
+
+@app.route('/db_select')
+def db_select():
+    conn = psycopg2.connect("postgres://adams_database_user:NK079LqRtrMghxVhVpKQtK2dFrzzYNiL@dpg-cgiaf9vdvk4vd526vf10-a/adams_database")
+    cur = conn.cursor()
+    cur.execute('''
+    SELECT * FROM Basketball;
+    ''')
+    conn.close()
+    rows = cur.fetchall()
+    template_string = "<table>"
+    for player in rows:
+        template_string += f"<tr> <td>{player[0]}</td> <td>{player[1]}</td> <td>{player[2]}</td> <td>{player[3]}</td> <td>{player[4]}</td> </tr>"
+    template_string += "</table>"
+    return template_string
+
